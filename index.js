@@ -11,6 +11,7 @@
 // For more info see docs.battlesnake.com
 
 import runServer from './server.js';
+import chalk from 'chalk';
 
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
@@ -88,11 +89,26 @@ function move(gameState) {
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
-
+  console.log(printBoard(gameState.board));
+  console.log("The gamestate is: ", gameState);
   console.log(`MOVE ${gameState.turn}: ${nextMove}`)
   return { move: nextMove };
 }
-
+function printBoard(g) {
+  const board = g;
+  const printBoard = Array.from({ length: board.height }, () => Array(board.width).fill('.'));
+  board.food.forEach(food => {
+    printBoard[food.y][food.x] = chalk.red('F'); 
+  });
+  board.snakes.forEach(snake => {
+    snake.body.forEach(segment => {
+      printBoard[segment.y][segment.x] = chalk.green('S'); 
+    });
+  });
+  for (let row = board.height - 1; row >= 0; row--) {
+    console.log(printBoard[row].join(' '));
+  }
+}
 runServer({
   info: info,
   start: start,
