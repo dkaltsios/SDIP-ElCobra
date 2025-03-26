@@ -12,8 +12,8 @@
 
 import runServer from './server.js';
 import chalk from 'chalk';
-import { preventSelfCollision } from './snakeMovement.js';
-import { avoidWalls } from './snakeMovement.js';
+import { preventSelfCollision, avoidCollisionsWithOtherSnakes, avoidWalls } from './snakeMovement.js';
+
 
 
 // info is called when you create your Battlesnake on play.battlesnake.com
@@ -78,6 +78,7 @@ function move(gameState) {
 
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
+  isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);

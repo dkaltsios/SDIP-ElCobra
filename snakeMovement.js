@@ -42,3 +42,25 @@ export function avoidWalls(gameState, isMoveSafe) {
 
   return isMoveSafe;
 }
+
+//Todo3-Snake avoids collision with other snakes
+export function avoidCollisionsWithOtherSnakes(gameState, isMoveSafe) {
+  const myHead = gameState.you.head;
+  const otherSnakes = gameState.board.snakes;
+
+  otherSnakes.forEach((snake) => {
+    snake.body.forEach((segment) => {
+      if (segment.x === myHead.x + 1 && segment.y === myHead.y) {
+        isMoveSafe.right = false;
+      } else if (segment.x === myHead.x - 1 && segment.y === myHead.y) {
+        isMoveSafe.left = false;
+      } else if (segment.y === myHead.y + 1 && segment.x === myHead.x) {
+        isMoveSafe.up = false;
+      } else if (segment.y === myHead.y - 1 && segment.x === myHead.x) {
+        isMoveSafe.down = false;
+      }
+    });
+  });
+
+  return isMoveSafe;
+}
