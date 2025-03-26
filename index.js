@@ -12,6 +12,8 @@
 
 import runServer from './server.js';
 import chalk from 'chalk';
+import { preventSelfCollision } from './snakeMovement.js';
+
 
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
@@ -70,30 +72,10 @@ function move(gameState) {
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
   // boardWidth = gameState.board.width;
   // boardHeight = gameState.board.height;
-
-  // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
-  const myBody = gameState.you.body;
-
-  Object.keys(isMoveSafe).forEach(move => {
-    if (isMoveSafe[move]) {
-      let nextHeadPosition = { x: myHead.x, y: myHead.y };
   
-      if (move === "up") {
-        nextHeadPosition.y += 1;
-      } else if (move === "down") {
-        nextHeadPosition.y -= 1;
-      } else if (move === "left") {
-        nextHeadPosition.x -= 1;
-      } else if (move === "right") {
-        nextHeadPosition.x += 1;
-      }
-  
-      // Check if the next head position collides with any part of the body
-      if (myBody.some(segment => segment.x === nextHeadPosition.x && segment.y === nextHeadPosition.y)) {
-        isMoveSafe[move] = false;
-      }
-    }
-  });
+  // TODO 2 - Ensuring that battlesnake does not collide with itself
+  isMoveSafe = preventSelfCollision(gameState, isMoveSafe);
+
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
 
