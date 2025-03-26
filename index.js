@@ -13,6 +13,7 @@
 import runServer from './server.js';
 import chalk from 'chalk';
 import { preventSelfCollision } from './snakeMovement.js';
+import { avoidWalls } from './snakeMovement.js';
 
 
 // info is called when you create your Battlesnake on play.battlesnake.com
@@ -70,8 +71,7 @@ function move(gameState) {
   }
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  // boardWidth = gameState.board.width;
-  // boardHeight = gameState.board.height;
+  isMoveSafe = avoidWalls(gameState, isMoveSafe);
   
   // TODO 2 - Ensuring that battlesnake does not collide with itself
   isMoveSafe = preventSelfCollision(gameState, isMoveSafe);
