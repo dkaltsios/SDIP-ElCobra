@@ -14,6 +14,7 @@ import runServer from './server.js';
 import chalk from 'chalk';
 import { preventSelfCollision, avoidCollisionsWithOtherSnakes, avoidWalls } from './snakeMovement.js';
 
+kill me howtsdfa
 
 
 // info is called when you create your Battlesnake on play.battlesnake.com
