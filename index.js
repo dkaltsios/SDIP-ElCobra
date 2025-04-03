@@ -11,7 +11,11 @@
 // For more info see docs.battlesnake.com
 
 import runServer from './server.js';
-let aaa = 2;
+import chalk from 'chalk';
+import { preventSelfCollision, avoidCollisionsWithOtherSnakes, avoidWalls } from './snakeMovement.js';
+
+
+
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
 // TIP: If you open your Battlesnake URL in a browser you should see this data
@@ -67,14 +71,14 @@ function move(gameState) {
   }
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  // boardWidth = gameState.board.width;
-  // boardHeight = gameState.board.height;
-
-  // TODO: Step 2 - Prevent your Battlesnake from colliding with itself
-  // myBody = gameState.you.body;
+  isMoveSafe = avoidWalls(gameState, isMoveSafe);
+  
+  // TODO 2 - Ensuring that battlesnake does not collide with itself
+  isMoveSafe = preventSelfCollision(gameState, isMoveSafe);
 
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
+  isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter(key => isMoveSafe[key]);
@@ -88,11 +92,26 @@ function move(gameState) {
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
-
+  console.log(printBoard(gameState.board));
+  console.log("The gamestate is: ", gameState);
   console.log(`MOVE ${gameState.turn}: ${nextMove}`)
   return { move: nextMove };
 }
-
+function printBoard(g) {
+  const board = g;
+  const printBoard = Array.from({ length: board.height }, () => Array(board.width).fill('.'));
+  board.food.forEach(food => {
+    printBoard[food.y][food.x] = chalk.red('F'); 
+  });
+  board.snakes.forEach(snake => {
+    snake.body.forEach(segment => {
+      printBoard[segment.y][segment.x] = chalk.green('S'); 
+    });
+  });
+  for (let row = board.height - 1; row >= 0; row--) {
+    console.log(printBoard[row].join(' '));
+  }
+}
 runServer({
   info: info,
   start: start,
