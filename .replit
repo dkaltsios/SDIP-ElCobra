@@ -1,0 +1,5 @@
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Run"
