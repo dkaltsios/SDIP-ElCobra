@@ -1,5 +1,10 @@
+modules = ["nodejs-20"]
+run = "npm run start"
 [nix]
 channel = "stable-24_05"
 
 [workflows]
 runButton = "Run"
+
+[deployment]
+run = ["sh", "-c", "npm run start"]
