@@ -10,37 +10,37 @@
 // To get you started we've included code to prevent your Battlesnake from moving backwards.
 // For more info see docs.battlesnake.com
 
-import runServer from './server.js'
-import chalk from 'chalk'
+import runServer from "./server.js";
+import chalk from "chalk";
 import {
   preventSelfCollision,
   avoidCollisionsWithOtherSnakes,
   avoidWalls,
-} from './snakeMovement.js'
+} from "./snakeMovement.js";
 
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
 // TIP: If you open your Battlesnake URL in a browser you should see this data
 function info() {
-  console.log('INFO')
+  console.log("INFO");
 
   return {
-    apiversion: '1',
-    author: '', // TODO: Your Battlesnake Username
-    color: '#888888', // TODO: Choose color
-    head: 'default', // TODO: Choose head
-    tail: 'default', // TODO: Choose tail
-  }
+    apiversion: "1",
+    author: "", // TODO: Your Battlesnake Username
+    color: "#888888", // TODO: Choose color
+    head: "default", // TODO: Choose head
+    tail: "default", // TODO: Choose tail
+  };
 }
 
 // start is called when your Battlesnake begins a game
 function start(gameState) {
-  console.log('GAME START')
+  console.log("GAME START");
 }
 
 // end is called when your Battlesnake finishes a game
 function end(gameState) {
-  console.log('GAME OVER\n')
+  console.log("GAME OVER\n");
 }
 
 // move is called on every turn and returns your next move
@@ -52,68 +52,68 @@ function move(gameState) {
     down: true,
     left: true,
     right: true,
-  }
+  };
 
   // We've included code to prevent your Battlesnake from moving backwards
-  const myHead = gameState.you.body[0]
-  const myNeck = gameState.you.body[1]
+  const myHead = gameState.you.body[0];
+  const myNeck = gameState.you.body[1];
 
   if (myNeck.x < myHead.x) {
     // Neck is left of head, don't move left
-    isMoveSafe.left = false
+    isMoveSafe.left = false;
   } else if (myNeck.x > myHead.x) {
     // Neck is right of head, don't move right
-    isMoveSafe.right = false
+    isMoveSafe.right = false;
   } else if (myNeck.y < myHead.y) {
     // Neck is below head, don't move down
-    isMoveSafe.down = false
+    isMoveSafe.down = false;
   } else if (myNeck.y > myHead.y) {
     // Neck is above head, don't move up
-    isMoveSafe.up = false
+    isMoveSafe.up = false;
   }
 
   // TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-  isMoveSafe = avoidWalls(gameState, isMoveSafe)
+  isMoveSafe = avoidWalls(gameState, isMoveSafe);
 
   // TODO 2 - Ensuring that battlesnake does not collide with itself
-  isMoveSafe = preventSelfCollision(gameState, isMoveSafe)
+  isMoveSafe = preventSelfCollision(gameState, isMoveSafe);
 
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
-  isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe)
+  isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe);
 
   // Are there any safe moves left?
-  const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key])
+  const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
   if (safeMoves.length == 0) {
-    console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`)
-    return { move: 'down' }
+    console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
+    return { move: "down" };
   }
 
   // Choose a random move from the safe moves
-  const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)]
+  const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
-  console.log(printBoard(gameState.board))
-  console.log('The gamestate is: ', gameState)
-  console.log(`MOVE ${gameState.turn}: ${nextMove}`)
-  return { move: nextMove }
+  console.log(printBoard(gameState.board));
+  console.log("The gamestate is: ", gameState);
+  console.log(`MOVE ${gameState.turn}: ${nextMove}`);
+  return { move: nextMove };
 }
 function printBoard(g) {
-  const board = g
+  const board = g;
   const printBoard = Array.from({ length: board.height }, () =>
-    Array(board.width).fill('.')
-  )
+    Array(board.width).fill("."),
+  );
   board.food.forEach((food) => {
-    printBoard[food.y][food.x] = chalk.red('F')
-  })
+    printBoard[food.y][food.x] = chalk.red("F");
+  });
   board.snakes.forEach((snake) => {
     snake.body.forEach((segment) => {
-      printBoard[segment.y][segment.x] = chalk.green('S')
-    })
-  })
+      printBoard[segment.y][segment.x] = chalk.green("S");
+    });
+  });
   for (let row = board.height - 1; row >= 0; row--) {
-    console.log(printBoard[row].join(' '))
+    console.log(printBoard[row].join(" "));
   }
 }
 runServer({
@@ -121,4 +121,4 @@ runServer({
   start: start,
   move: move,
   end: end,
-})
+});
