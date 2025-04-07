@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+
 - Initial project setup with Node.js and Express.
 - Included Battlesnake starter project files.
 - Configuration files: `.editorconfig`, `.prettierignore`, `.prettierrc.json`, `.replit`.
@@ -17,9 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Project icon: `generated-icon.png`.
 
 ### Changed
+
 - Updated `README.md` with project details and setup instructions.
 
 ## [0.1.0] - 2025-04-07
 
 ### Added
+
 - Initial release with basic project structure and documentation.

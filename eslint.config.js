@@ -31,8 +31,8 @@ export default defineConfig([
       "sonarjs/todo-tag": "off",
 
       // Your custom rules
-      "semi": ["error", "always"],
-      "quotes": [0, "double"],
+      semi: ["error", "always"],
+      quotes: [0, "double"],
 
       // Prettier compatibility: turn off conflicting formatting rules
       "unicorn/string-content": "off",

@@ -8,27 +8,27 @@ export function preventSelfCollision(gameState, isMoveSafe) {
       let nextHeadPosition = { x: myHead.x, y: myHead.y };
 
       switch (move) {
-      case "up": {
-        nextHeadPosition.y += 1;
-      
-      break;
-      }
-      case "down": {
-        nextHeadPosition.y -= 1;
-      
-      break;
-      }
-      case "left": {
-        nextHeadPosition.x -= 1;
-      
-      break;
-      }
-      case "right": {
-        nextHeadPosition.x += 1;
-      
-      break;
-      }
-      // No default
+        case "up": {
+          nextHeadPosition.y += 1;
+
+          break;
+        }
+        case "down": {
+          nextHeadPosition.y -= 1;
+
+          break;
+        }
+        case "left": {
+          nextHeadPosition.x -= 1;
+
+          break;
+        }
+        case "right": {
+          nextHeadPosition.x += 1;
+
+          break;
+        }
+        // No default
       }
 
       // Exclude the neck (second body segment) from the collision check
