@@ -2,27 +2,28 @@ import express from "express";
 
 export default function runServer(handlers) {
   const app = express();
+  app.disable("x-powered-by");
   app.use(express.json());
 
-  app.get("/", (req, res) => {
+  app.get("/", (request, res) => {
     res.send(handlers.info());
   });
 
-  app.post("/start", (req, res) => {
-    handlers.start(req.body);
+  app.post("/start", (request, res) => {
+    handlers.start(request.body);
     res.send("ok");
   });
 
-  app.post("/move", (req, res) => {
-    res.send(handlers.move(req.body));
+  app.post("/move", (request, res) => {
+    res.send(handlers.move(request.body));
   });
 
-  app.post("/end", (req, res) => {
-    handlers.end(req.body);
+  app.post("/end", (request, res) => {
+    handlers.end(request.body);
     res.send("ok");
   });
 
-  app.use(function (req, res, next) {
+  app.use(function (request, res, next) {
     res.set("Server", "battlesnake/replit/starter-snake-javascript");
     next();
   });

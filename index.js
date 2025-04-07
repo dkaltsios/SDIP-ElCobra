@@ -34,12 +34,12 @@ function info() {
 }
 
 // start is called when your Battlesnake begins a game
-function start(gameState) {
+function start() {
   console.log("GAME START");
 }
 
 // end is called when your Battlesnake finishes a game
-function end(gameState) {
+function end() {
   console.log("GAME OVER\n");
 }
 
@@ -84,34 +84,36 @@ function move(gameState) {
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
-  if (safeMoves.length == 0) {
+  if (safeMoves.length === 0) {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
     return { move: "down" };
   }
 
   // Choose a random move from the safe moves
+  // eslint-disable-next-line sonarjs/pseudo-random
   const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
 
   // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
   // food = gameState.board.food;
-  console.log(printBoard(gameState.board));
-  console.log("The gamestate is: ", gameState);
+  printBoard(gameState.board);
+  console.log("The gamestate is:", gameState);
   console.log(`MOVE ${gameState.turn}: ${nextMove}`);
   return { move: nextMove };
 }
 function printBoard(g) {
   const board = g;
   const printBoard = Array.from({ length: board.height }, () =>
-    Array(board.width).fill("."),
+    // eslint-disable-next-line unicorn/no-new-array
+    new Array(board.width).fill("."),
   );
-  board.food.forEach((food) => {
+  for (const food of board.food) {
     printBoard[food.y][food.x] = chalk.red("F");
-  });
-  board.snakes.forEach((snake) => {
-    snake.body.forEach((segment) => {
+  }
+  for (const snake of board.snakes) {
+    for (const segment of snake.body) {
       printBoard[segment.y][segment.x] = chalk.green("S");
-    });
-  });
+    }
+  }
   for (let row = board.height - 1; row >= 0; row--) {
     console.log(printBoard[row].join(" "));
   }
