@@ -16,6 +16,7 @@ import {
   preventSelfCollision,
   avoidCollisionsWithOtherSnakes,
   avoidWalls,
+  avoidHeadToHead,
 } from "./snakeMovement.js";
 
 // info is called when you create your Battlesnake on play.battlesnake.com
@@ -81,6 +82,10 @@ function move(gameState) {
   // TODO: Step 3 - Prevent your Battlesnake from colliding with other Battlesnakes
   // opponents = gameState.board.snakes;
   isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe);
+
+  // TODO: Step 4 - Prevent your Battlesnake from colliding with other Battlesnakes' heads
+  // Avoid head-to-head collisions
+  isMoveSafe = avoidHeadToHead(gameState, isMoveSafe);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
