@@ -16,6 +16,7 @@ import {
   preventSelfCollision,
   avoidCollisionsWithOtherSnakes,
   avoidWalls,
+  moveTowardClosestFood,
 } from "./snakeMovement.js";
 
 // info is called when you create your Battlesnake on play.battlesnake.com
@@ -82,6 +83,9 @@ function move(gameState) {
   // opponents = gameState.board.snakes;
   isMoveSafe = avoidCollisionsWithOtherSnakes(gameState, isMoveSafe);
 
+  // TODO: Step 4 - Move towards food instead of random
+  isMoveSafe = moveTowardClosestFood(gameState, isMoveSafe);
+
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
   if (safeMoves.length === 0) {
@@ -90,11 +94,8 @@ function move(gameState) {
   }
 
   // Choose a random move from the safe moves
-  // eslint-disable-next-line sonarjs/pseudo-random
-  const nextMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
+  const nextMove = safeMoves[0];
 
-  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-  // food = gameState.board.food;
   printBoard(gameState.board);
   console.log("The gamestate is:", gameState);
   console.log(`MOVE ${gameState.turn}: ${nextMove}`);
