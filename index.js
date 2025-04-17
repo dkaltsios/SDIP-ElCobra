@@ -17,6 +17,7 @@ import {
   avoidCollisionsWithOtherSnakes,
   avoidWalls,
   moveTowardClosestFood,
+  avoidHeadToHead,
 } from "./snakeMovement.js";
 
 // info is called when you create your Battlesnake on play.battlesnake.com
@@ -85,6 +86,10 @@ function move(gameState) {
 
   // TODO: Step 4 - Move towards food instead of random
   isMoveSafe = moveTowardClosestFood(gameState, isMoveSafe);
+
+  // TODO: Step 5 - Prevent your Battlesnake from colliding with other Battlesnakes' heads
+  // Avoid head-to-head collisions
+  isMoveSafe = avoidHeadToHead(gameState, isMoveSafe);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
